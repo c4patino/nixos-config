@@ -67,6 +67,7 @@
           ".config/obsidian"
           ".config/obs-studio"
           ".config/Postman"
+          ".config/pypoetry"
           ".config/Slack"
           ".config/teamviewer"
           ".config/variety"
