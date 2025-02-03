@@ -2,12 +2,19 @@
   lib,
   config,
   ...
-}: {
+}: let
+  types = lib.types;
+in {
   options = {
     samba.enable = lib.mkOption {
       type = lib.types.bool;
       default = false;
       description = "Enable samba";
+    };
+    samba.folders = lib.mkOption {
+      type = types.listOf types.str;
+      default = [];
+      description = "List of folder shares to create with samba";
     };
   };
 
@@ -38,6 +45,10 @@
     services.samba-wsdd = {
       enable = true;
       openFirewall = true;
+    };
+
+    environment.sessionVariables = {
+      SAMBA = "/mnt/samba";
     };
   };
 }

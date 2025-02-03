@@ -6,12 +6,18 @@
 }: let
   hostName = config.networking.hostName;
   sharedMachines = ["arisu" "kokoro" "chibi"];
+  types = lib.types;
 in {
-  options = {
-    syncthing.enable = lib.mkOption {
+  options.syncthing = {
+    enable = lib.mkOption {
       type = lib.types.bool;
       default = false;
       description = "Enable syncthing";
+    };
+    folders = lib.mkOption {
+      type = types.listOf types.str;
+      default = [];
+      description = "List of folder shares to create with samba";
     };
   };
 
@@ -56,7 +62,7 @@ in {
     systemd.services.syncthing.environment.STNODEFAULTFOLDER = "true";
 
     environment.sessionVariables = {
-      SHARED = "/mnt/syncthing/shared";
+      SYNCTHING = "/mnt/syncthing";
     };
   };
 }
